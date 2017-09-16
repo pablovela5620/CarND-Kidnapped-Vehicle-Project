@@ -71,8 +71,8 @@ int main()
 			double sense_x = std::stod(j[1]["sense_x"].get<std::string>());
 			double sense_y = std::stod(j[1]["sense_y"].get<std::string>());
 			double sense_theta = std::stod(j[1]["sense_theta"].get<std::string>());
-
 			pf.init(sense_x, sense_y, sense_theta, sigma_pos);
+
 		  }
 		  else {
 			// Predict the vehicle's next state from previous (noiseless control) data.
@@ -81,6 +81,7 @@ int main()
 
 			pf.prediction(delta_t, sigma_pos, previous_velocity, previous_yawrate);
 		  }
+
 
 		  // receive noisy observation data from the simulator
 		  // sense_observations in JSON format [{obs_x,obs_y},{obs_x,obs_y},...{obs_x,obs_y}]
@@ -109,6 +110,8 @@ int main()
 				obs.y = y_sense[i];
 				noisy_observations.push_back(obs);
         	}
+
+
 
 		  // Update the weights and resample
 		  pf.updateWeights(sensor_range, sigma_landmark, noisy_observations, map);
